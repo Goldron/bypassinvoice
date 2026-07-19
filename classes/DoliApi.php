@@ -721,7 +721,8 @@ class DoliApi
      */
     public function isCustomerByField(string $field, string $value, $url = '/api/index.php/thirdparties'): ?int
     {
-        $value = str_replace(" ", "", $value);
+        $field = preg_replace('/[^A-Za-z0-9_]/', '', $field);
+        $value = preg_replace('/[^A-Za-z0-9]/', '', $value);
 
         $urlFilter = "?sqlfilters=(t.$field:=:'$value')";
 

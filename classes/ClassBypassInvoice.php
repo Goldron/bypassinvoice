@@ -41,7 +41,7 @@ class ClassBypassInvoice extends \ObjectModel
     {
         $sql = 'SELECT *
                 FROM ' . _DB_PREFIX_ . 'bypassinvoice
-                AND `id_shop` = ' . (int) \Context::getContext()->shop->id . '
+                WHERE `id_shop` = ' . (int) \Context::getContext()->shop->id . '
                 ';
 
         if (!$result = \Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($sql)) {

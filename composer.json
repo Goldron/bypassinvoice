@@ -1,6 +1,7 @@
 {
     "name": "prestashop/bypassinvoice",
     "description": "Delay invoicing versus Dolibarr",
+    "version": "1.4.1",
     "license": "GPL-3.0-or-later",
     "autoload": {
         "psr-4": {

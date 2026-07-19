@@ -84,6 +84,7 @@ class Bypassinvoice extends Module
 
         return (
             parent::install()
+            && $this->installTab()
             && $this->registerHook('actionPaymentConfirmation')
             && $this->registerHook('actionCustomerAccountAdd')
             && $this->registerHook('actionCustomerAccountUpdate')
@@ -118,6 +119,46 @@ class Bypassinvoice extends Module
     }
 
     /**
+     * Register the "Sociétés Dolibarr" back-office tab used to manage the
+     * customer <-> Dolibarr societe relations.
+     *
+     * @return bool
+     */
+    protected function installTab(): bool
+    {
+        if (\Tab::getIdFromClassName('AdminBypassInvoiceRelation')) {
+            return true;
+        }
+
+        $tab = new \Tab();
+        $tab->class_name = 'AdminBypassInvoiceRelation';
+        $tab->module = $this->name;
+        $tab->id_parent = (int) \Tab::getIdFromClassName('AdminParentCustomer');
+
+        foreach (\Language::getLanguages(false) as $lang) {
+            $tab->name[$lang['id_lang']] = 'Sociétés Dolibarr';
+        }
+
+        return $tab->add();
+    }
+
+    /**
+     * @return bool
+     */
+    protected function uninstallTab(): bool
+    {
+        $id_tab = (int) \Tab::getIdFromClassName('AdminBypassInvoiceRelation');
+
+        if (!$id_tab) {
+            return true;
+        }
+
+        $tab = new \Tab($id_tab);
+
+        return $tab->delete();
+    }
+
+    /**
      * @return bool
      */
     public function uninstall(): bool
@@ -130,6 +171,7 @@ class Bypassinvoice extends Module
 
         return (
             parent::uninstall()
+            && $this->uninstallTab()
             && \Configuration::deleteByName('BYPASSINVOICE_RUN')
             && \Configuration::deleteByName('BYPASSINVOICE_KEY')
             && \Configuration::deleteByName('BYPASSINVOICE_URL')

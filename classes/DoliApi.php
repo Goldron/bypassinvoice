@@ -738,6 +738,53 @@ class DoliApi
     }
 
     /**
+     * get a thirdparty (societe) by its Dolibarr id
+     *
+     * @param int $id thirdparty id
+     * @return null|array thirdparty
+     */
+    public function getThirdpartyById(int $id, $url = '/api/index.php/thirdparties/'): ?array
+    {
+        $result = $this->curl->runCurl($url . $id);
+
+        if (!empty($result) && $this->curl->returnHttpInfo['http_code'] == 200) {
+            return $result;
+        }
+
+        return null;
+    }
+
+    /**
+     * search thirdparties (societes) by partial name, for admin UI autocomplete
+     *
+     * @param string $term search term (2 chars min)
+     * @param int $limit max results
+     * @return array thirdparties list, empty array if none found
+     */
+    public function searchThirdparties(string $term, int $limit = 20, $url = '/api/index.php/thirdparties'): array
+    {
+        $term = trim($term);
+
+        if (mb_strlen($term) < 2) {
+            return [];
+        }
+
+        // SQL-escape the search term: Dolibarr's sqlfilters embeds it into a raw
+        // SQL string literal server-side, so backslash/quote must be escaped.
+        $term = str_replace(['\\', "'"], ['\\\\', "\\'"], $term);
+
+        $filter = '?sqlfilters=' . rawurlencode("(t.nom:like:'%{$term}%')") . '&limit=' . (int) $limit;
+
+        $result = $this->curl->runCurl($url . $filter);
+
+        if (!empty($result) && $this->curl->returnHttpInfo['http_code'] == 200) {
+            return $result;
+        }
+
+        return [];
+    }
+
+    /**
      * create customer
      *
      * @param array $post ["name" => string, "email" => string, "entity" => int, "client" => int, "fournisseur" => int]

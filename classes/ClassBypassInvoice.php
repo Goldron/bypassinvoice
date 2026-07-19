@@ -121,4 +121,36 @@ class ClassBypassInvoice extends \ObjectModel
 
         return \Db::getInstance()->execute($sql);
     }
+
+    /**
+     * update the Dolibarr societe id for a given relation (admin edit action)
+     *
+     * @param int $id_bypassinvoice
+     * @param int $id_societe
+     * @return bool
+     */
+    public static function updateSocieteById(int $id_bypassinvoice, int $id_societe): bool
+    {
+        $sql = 'UPDATE ' . _DB_PREFIX_ . 'bypassinvoice
+                SET `id_societe` = ' . (int) $id_societe . '
+                WHERE `id_bypassinvoice` = ' . (int) $id_bypassinvoice . '
+                AND `id_shop` = ' . (int) \Context::getContext()->shop->id;
+
+        return (bool) \Db::getInstance()->execute($sql);
+    }
+
+    /**
+     * delete a relation (admin action)
+     *
+     * @param int $id_bypassinvoice
+     * @return bool
+     */
+    public static function deleteById(int $id_bypassinvoice): bool
+    {
+        $sql = 'DELETE FROM ' . _DB_PREFIX_ . 'bypassinvoice
+                WHERE `id_bypassinvoice` = ' . (int) $id_bypassinvoice . '
+                AND `id_shop` = ' . (int) \Context::getContext()->shop->id;
+
+        return (bool) \Db::getInstance()->execute($sql);
+    }
 }

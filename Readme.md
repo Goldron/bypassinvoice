@@ -1,5 +1,7 @@
 # BypassInvoice
 
+*[English version](Readme_en.md)*
+
 Délègue la gestion des factures — ou uniquement leur numérotation — à [Dolibarr](https://www.dolibarr.org/), via son API REST.
 
 ## Compatibilité

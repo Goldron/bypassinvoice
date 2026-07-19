@@ -1,0 +1,22 @@
+{
+    "name": "prestashop/bypassinvoice",
+    "description": "Delay invoicing versus Dolibarr",
+    "license": "AFL-3.0",
+    "autoload": {
+        "psr-4": {
+            "Bypassinvoice\\": "classes/"
+        },
+	"classmap": ["bypassinvoice.php"]
+    },
+    "authors": [
+        {
+            "name": "SILADEL SAS",
+	    "email": "info@siladel.fr"
+        }
+    ],
+    "require": {
+	"php": ">=7.2"
+  },
+
+  "type": "prestashop-module"
+}

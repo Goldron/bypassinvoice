@@ -1,0 +1,40 @@
+/**
+ * Copyright since 2024 SILADAL SAS.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to (Apache-2.0)
+ * that is bundled with this package in the file LICENSE.md.
+ * It is also available through the world-wide-web at this URL:
+ * https://opensource.org/licenses/Apache-2.0
+ *
+ * @author      David IGREJA. <david@siladel.fr> SILADEL SAS
+ * @copyright   Since 2024 SILADEL SAS
+ * @license     https://opensource.org/licenses/Apache-2.0 Apache License, Version 2.0
+ *
+ */
+
+#bypassinvoice .invoice {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #f6f6f6;
+}
+
+#bypassinvoice .invoice .label
+{
+  display: inline-block;
+  padding: 0.25rem 0.375rem;
+  margin: 0.25rem 0;
+  color: #fff;
+  border-radius: 3px;
+}
+
+#bypassinvoice .page-customer{
+    padding: 1rem; 
+    background: #fff; 
+    font-size: .875rem; 
+    margin-bottom: 1.563rem;
+}
+
+#bypassinvoice .reforder {
+    padding-bottom: 1em;
+}

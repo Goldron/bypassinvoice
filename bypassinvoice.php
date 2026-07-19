@@ -111,7 +111,6 @@ class Bypassinvoice extends Module
             && \Configuration::updateValue('BYPASSINVOICE_TEMPLATE', '')
             && \Configuration::updateValue('BYPASSINVOICE_WAREHOUSE', 1)
             && \Configuration::updateValue('BYPASSINVOICE_ALLINVOICE', null)
-            && \Configuration::updateValue('BYPASSINVOICE_DISCOUNT', false)
             && \Configuration::updateValue('BYPASSINVOICE_SLIP', null)
         );
         /*
@@ -190,7 +189,6 @@ class Bypassinvoice extends Module
             && \Configuration::deleteByName('BYPASSINVOICE_TEMPLATE')
             && \Configuration::deleteByName('BYPASSINVOICE_WAREHOUSE')
             && \Configuration::deleteByName('BYPASSINVOICE_ALLINVOICE')
-            && \Configuration::deleteByName('BYPASSINVOICE_DISCOUNT')
             && \Configuration::deleteByName('BYPASSINVOICE_SLIP')
         );
     }
@@ -236,7 +234,7 @@ class Bypassinvoice extends Module
                 }
 
                 // add product line
-                $this->addLines($order, $invoice_id, null, $refund);
+                $this->addLines($order, $invoice_id, $refund);
             }
 
             // warehouse
@@ -861,10 +859,8 @@ class Bypassinvoice extends Module
 
             if (isset($product_list) && !empty($product_list)) {
 
-               $pourcent = $this->api->getPourcentByIDCustomer($societe_id);
-
                 // add product line
-                $this->addLines($order, $invoice_id, $pourcent);
+                $this->addLines($order, $invoice_id);
 
                 // add shipping line
                 if ($carrier) {
@@ -996,7 +992,7 @@ class Bypassinvoice extends Module
      * @param array refund product
      * @return void
      */
-    protected function addLines($order, int $invoice_id, string $pourcent = null, array $refund = []): void
+    protected function addLines($order, int $invoice_id, array $refund = []): void
     {
 
         $swapFields = [
@@ -1019,15 +1015,6 @@ class Bypassinvoice extends Module
         // add product line
         foreach ($products as $product) {
             $data = $this->replaceKeysArray($product, $swapFields);
-
-            //specific price
-            if (!Configuration::get('BYPASSINVOICE_DISCOUNT')) {
-                $data['subprice'] = $product['original_product_price'];
-
-                if (!empty($pourcent)) {
-                    $data['remise_percent'] = (int) ($pourcent);
-                }
-            }
 
             if (!empty($data['barcode'])) {
                 $product_dol = $this->api->getProductByBarcode($data['barcode']);
@@ -1647,27 +1634,6 @@ class Bypassinvoice extends Module
 
             $fields_form['form']['input'][] = [
                 'type' => 'switch',
-                'label' => $this->l('Enable specific prices'),
-                'desc' => $this->l('Consideration of specific prices for customers belonging to different groups, different countries, etc.'),
-                'is_bool' => true,
-                'name' => 'BYPASSINVOICE_DISCOUNT',
-                'multiple' => true,
-                'values' => [
-                    [
-                        'id' => 'active_on',
-                        'value' => true,
-                        'label' => $this->l('Enabled'),
-                    ],
-                    [
-                        'id' => 'active_off',
-                        'value' => false,
-                        'label' => $this->l('Disabled'),
-                    ],
-                ],
-            ];
-
-            $fields_form['form']['input'][] = [
-                'type' => 'switch',
                 'label' => $this->l('Credit note'),
                 'desc' => $this->l('Turn on or off credit notes specifically for products. (enables the creation of credit notes and their dispatch to Dolibarr)'),
                 'is_bool' => true,
@@ -1795,7 +1761,6 @@ class Bypassinvoice extends Module
             'BYPASSINVOICE_TEMPLATE',
             'BYPASSINVOICE_WAREHOUSE',
             'BYPASSINVOICE_ALLINVOICE',
-            'BYPASSINVOICE_DISCOUNT',
         ];
 
         $data = [];

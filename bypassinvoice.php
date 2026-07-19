@@ -1083,7 +1083,7 @@ class Bypassinvoice extends Module
         }
 
         $amounts = [
-            "datepaye" => time(),
+            "datepaye" => (string) time(),
             "amounts" => [$invoice_id => $order->total_paid], // id invoice
             "paymentid" => '', // id de paiement
             "closepaidinvoices" => "yes",

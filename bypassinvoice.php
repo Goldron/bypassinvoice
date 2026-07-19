@@ -1123,6 +1123,10 @@ class Bypassinvoice extends Module
      */
     public function getContent()
     {
+        if (Tools::isSubmit('bypassinvoiceDownloadLog')) {
+            $this->downloadLog();
+        }
+
         if (((bool) Tools::isSubmit('submitBypassinvoiceModule')) == true) {
             $this->postProcess();
         }
@@ -1152,10 +1156,47 @@ class Bypassinvoice extends Module
         return $output . $this->renderForm();
     }
 
+    /**
+     * Stream the module log file to the logged-in employee.
+     * Only reachable through AdminModules (employee auth + token already
+     * checked by the admin controller before getContent() is called).
+     */
+    protected function downloadLog(): void
+    {
+        $ym = date('Ym');
+        if (preg_match('/^\d{6}$/', (string) Tools::getValue('logfile'))) {
+            $ym = Tools::getValue('logfile');
+        }
+
+        $path = _PS_MODULE_DIR_ . 'bypassinvoice/log/' . $ym . '_bypassinvoice.dat';
+
+        if (!is_file($path)) {
+            return;
+        }
+
+        header('Content-Type: text/plain; charset=UTF-8');
+        header('Content-Disposition: inline; filename="' . $ym . '_bypassinvoice.dat"');
+        header('Content-Length: ' . filesize($path));
+        header('Cache-Control: private, max-age=0, must-revalidate');
+        header('Pragma: public');
+
+        readfile($path);
+        exit;
+    }
+
     public function bypassinvoiceHeader()
     {
         $lang = Context::getContext()->language->iso_code;
         $langues = array("fr", "en", "es");
+
+        $logUrl = '';
+        if (DoliTools::isLogger()) {
+            $logUrl = $this->context->link->getAdminLink('AdminModules')
+                . '&configure=' . $this->name
+                . '&tab_module=' . $this->tab
+                . '&module_name=' . $this->name
+                . '&bypassinvoiceDownloadLog=1';
+        }
 
         Context::getContext()->smarty->assign([
             'module_dir' => $this->_path,
@@ -1163,7 +1204,8 @@ class Bypassinvoice extends Module
             'NAME' => $this->displayName,
             'VERSION' => $this->version,
             'STATUS' => $this->status,
-            'LOGFILE' => DoliTools::isLogger() ? date("Ym") . '_' . $this->name : ''
+            'LOGFILE' => DoliTools::isLogger() ? date("Ym") . '_' . $this->name : '',
+            'LOGFILE_URL' => $logUrl,
         ]);
 
         return $this->context->smarty->fetch($this->local_path . 'views/templates/admin/configure.tpl');

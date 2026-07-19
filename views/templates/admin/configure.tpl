@@ -43,8 +43,8 @@
 							href="{$module_dir|escape:'html':'UTF-8'}doc/readme_{$LANG_ISO|escape:'html':'UTF-8'}.pdf">
 							<i class="material-icons">book</i>
 							{l s='Documentation' mod='bypassinvoice'}</a>
-						{if !empty($LOGFILE)}
-						| <a href="{$module_dir|escape:'html':'UTF-8'}log/{$LOGFILE|escape:'html':'UTF-8'}.dat">
+						{if !empty($LOGFILE_URL)}
+						| <a href="{$LOGFILE_URL|escape:'html':'UTF-8'}">
 						<i class="material-icons">grading</i>
 						{l s='Log' mod='bypassinvoice'}</a>
 						{/if}

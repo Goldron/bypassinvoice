@@ -1,6 +1,6 @@
 # BypassInvoice
 
-*[Version française](Readme.md)*
+*[Version française](README_fr.md)*
 
 Delegates invoice management — or just their numbering — to [Dolibarr](https://www.dolibarr.org/), via its REST API.
 

@@ -1,7 +1,7 @@
 {
     "name": "prestashop/bypassinvoice",
     "description": "Delay invoicing versus Dolibarr",
-    "license": "AFL-3.0",
+    "license": "GPL-3.0-or-later",
     "autoload": {
         "psr-4": {
             "Bypassinvoice\\": "classes/"
@@ -10,7 +10,7 @@
     },
     "authors": [
         {
-            "name": "SILADEL SAS",
+            "name": "SILADEL",
 	    "email": "info@siladel.fr"
         }
     ],

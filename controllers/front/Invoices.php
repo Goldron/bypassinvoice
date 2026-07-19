@@ -1,17 +1,17 @@
 <?php
 /**
- * Copyright since 2024 SILADAL SAS.
+ * Copyright since 2024 SILADEL.
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to (Apache-2.0)
- * that is bundled with this package in the file LICENSE.md.
+ * This source file is subject to (GPL-3.0-or-later)
+ * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
- * https://opensource.org/licenses/Apache-2.0
+ * https://www.gnu.org/licenses/gpl-3.0.html
  *
- * @author      David IGREJA. <david@siladel.fr> SILADEL SAS
- * @copyright   Since 2024 SILADEL SAS
- * @license     https://opensource.org/licenses/Apache-2.0 Apache License, Version 2.0
+ * @author      David IGREJA. <david@siladel.fr> SILADEL
+ * @copyright   Since 2024 SILADEL
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License, Version 3
  *
  */
 

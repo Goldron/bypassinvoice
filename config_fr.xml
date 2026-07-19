@@ -4,7 +4,7 @@
     <displayName><![CDATA[BypassInvoice]]></displayName>
     <version><![CDATA[1.4.0]]></version>
     <description><![CDATA[D&eacute;l&eacute;guer la gestion des factures ou sa num&eacute;rotation &agrave; Dolibarr]]></description>
-    <author><![CDATA[SILADEL SAS]]></author>
+    <author><![CDATA[SILADEL]]></author>
     <tab><![CDATA[others]]></tab>
 	<confirmUninstall><![CDATA[Confirmez-vous la suppression de la facturation ou de la numérotation des factures attribuée à Dolibarr ?]]></confirmUninstall>
     <is_configurable>1</is_configurable>

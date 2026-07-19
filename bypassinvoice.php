@@ -1050,8 +1050,35 @@ class Bypassinvoice extends Module
     }
 
     /**
+     * Determine the real tax rate of an order cart rule (discount).
+     *
+     * Free shipping discounts must use the carrier's own tax rate, since
+     * they cancel out the shipping line ; other discounts use the rate
+     * PrestaShop itself computed for that cart rule (value / value_tax_excl).
+     *
+     * @param Order
+     * @param array order_cart_rule row
+     * @return float tax rate
+     */
+    protected function getRuleTaxRate($order, array $cartRule): float
+    {
+        if (!empty($cartRule['free_shipping'])) {
+            return (float) $order->carrier_tax_rate;
+        }
+
+        $tax_excl = (float) $cartRule['value_tax_excl'];
+        $tax_incl = (float) $cartRule['value'];
+
+        if ($tax_excl == 0.0) {
+            return 0;
+        }
+
+        return round((($tax_incl / $tax_excl) - 1) * 100, 3);
+    }
+
+    /**
      * Add discount
-     * 
+     *
      * @param Order
      * @param int id invoice
      * @return void
@@ -1066,7 +1093,7 @@ class Bypassinvoice extends Module
                 $data['label'] = (!empty($value['name'])) ? $value['name'] : $this->l('Customer discount');
                 $data['subprice'] = (float) $value['value_tax_excl'] * -1;
                 $data['qty'] = 1;
-                $data['tva_tx'] = 20;
+                $data['tva_tx'] = $this->getRuleTaxRate($order, $value);
                 $data['ref'] = "discount";
                 $data['product_type'] = 1;
                 $data['fk_product'] = "";

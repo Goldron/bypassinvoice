@@ -1,3 +1,13 @@
+<p align="center">
+  <a href="https://www.siladel.fr">
+    <img src=".github/images/siladel.svg" alt="SILADEL" width="84" height="40">
+  </a>
+</p>
+
+<p align="center">
+  Developed by <a href="https://www.siladel.fr">SILADEL</a> — Author: IGREJA David
+</p>
+
 # BypassInvoice
 
 *[English version](README.md)*

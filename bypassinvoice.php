@@ -44,7 +44,7 @@ class Bypassinvoice extends Module
     {
         $this->name = 'bypassinvoice';
         $this->tab = 'others';
-        $this->version = '1.4.1';
+        $this->version = '1.5.0';
         $this->author = 'SILADEL';
         $this->need_instance = 0;
         $this->module_key = 'a9e1395b4f26cd8a82064af070100c4a';

@@ -2,7 +2,7 @@
 <module>
     <name>bypassinvoice</name>
     <displayName><![CDATA[BypassInvoice]]></displayName>
-    <version><![CDATA[1.4.1]]></version>
+    <version><![CDATA[1.5.0]]></version>
     <description><![CDATA[D&eacute;l&eacute;guer la gestion des factures ou sa num&eacute;rotation &agrave; Dolibarr]]></description>
     <author><![CDATA[SILADEL]]></author>
     <tab><![CDATA[others]]></tab>

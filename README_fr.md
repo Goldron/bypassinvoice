@@ -27,11 +27,19 @@ Le module fonctionne selon deux modes, configurables depuis son écran de régla
 - **Synchronisation client → société Dolibarr** : à la création ou la mise à jour d'un compte client PrestaShop, le module crée ou met à jour le tiers correspondant dans Dolibarr (nom, SIRET, conditions de règlement, etc.).
 - **Création de facture à la confirmation de paiement** : lignes produits, transporteur, remises panier, puis validation de la facture dans Dolibarr.
 - **Enregistrement du paiement** dans Dolibarr, avec mapping du module de paiement PrestaShop vers le mode de paiement Dolibarr correspondant.
-- **Avoirs** : la création d'un avoir côté PrestaShop (remboursement) génère une facture d'avoir liée dans Dolibarr.
+- **Avoirs** : la création d'un avoir côté PrestaShop (remboursement) génère une facture d'avoir liée dans Dolibarr, produits sélectionnés et/ou frais de port remboursés inclus. Aucun avoir n'est généré si rien n'a été sélectionné pour le remboursement.
 - **Mouvement de stock** (optionnel) : si un entrepôt Dolibarr est renseigné dans les réglages, la validation de facture transmet cet entrepôt à Dolibarr — le mouvement de stock effectif dépend ensuite de la configuration propre de Dolibarr (stock décrémenté à la facture ou à la commande).
 - **Paiement différé** : un statut de commande peut être désigné comme "sans paiement" ; les commandes passées par ce statut ont leur facture créée avec des conditions de règlement dédiées, sans qu'aucun paiement ne soit transmis à Dolibarr tant que ce statut est présent dans leur historique.
 - **Format du numéro de facture** personnalisable : préfixe, année, mois, caractère de séparation, longueur du numéro.
 - **Journal d'événements** consultable depuis l'écran de configuration du module (accès réservé aux employés connectés au back-office).
+
+### Gestion des relations client ↔ société
+
+L'onglet **Sociétés Dolibarr** (sous le menu Clients du back-office) liste tous les clients PrestaShop déjà associés à une société Dolibarr. Pour chaque relation, il est possible de :
+- **Modifier** la société associée, via un champ de recherche en direct dans les tiers Dolibarr
+- **Supprimer** la relation
+
+Seule la société peut être modifiée depuis cet écran ; le client PrestaShop associé n'est pas modifiable (relations créées uniquement par la synchronisation automatique du module).
 
 ## Installation
 

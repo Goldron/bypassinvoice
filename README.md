@@ -27,11 +27,19 @@ The module operates in two modes, configurable from its settings screen:
 - **Customer → Dolibarr third party sync**: when a PrestaShop customer account is created or updated, the module creates or updates the matching third party in Dolibarr (name, SIRET, payment terms, etc.).
 - **Invoice creation on payment confirmation**: product lines, carrier, cart discounts, then the invoice is validated in Dolibarr.
 - **Payment recording** in Dolibarr, mapping the PrestaShop payment module to the corresponding Dolibarr payment method.
-- **Credit notes**: creating a credit slip on the PrestaShop side (refund) generates a linked credit-note invoice in Dolibarr.
+- **Credit notes**: creating a credit slip on the PrestaShop side (refund) generates a linked credit-note invoice in Dolibarr, covering selected products and/or refunded shipping. No credit note is generated if nothing was selected for refund.
 - **Stock movement** (optional): if a Dolibarr warehouse is set in the module settings, invoice validation passes that warehouse to Dolibarr — whether stock is actually moved then depends on Dolibarr's own configuration (stock decreased on invoice vs. on order).
 - **Deferred payment**: an order status can be designated as "no payment"; orders that go through this status get their invoice created with dedicated payment terms, and no payment is sent to Dolibarr as long as that status is present in their history.
 - **Customizable invoice number format**: prefix, year, month, separator character, number padding length.
 - **Event log** viewable from the module's configuration screen (restricted to employees logged into the back office).
+
+### Managing customer ↔ societe relations
+
+The **Sociétés Dolibarr** tab (under the back office's Customers menu) lists every PrestaShop customer already linked to a Dolibarr societe. For each relation, you can:
+- **Edit** the linked societe, via a live search field over Dolibarr third parties
+- **Delete** the relation
+
+Only the societe can be changed from this screen; the associated PrestaShop customer cannot be edited (relations are only ever created by the module's automatic sync).
 
 ## Installation
 

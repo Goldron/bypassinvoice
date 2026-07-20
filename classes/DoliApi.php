@@ -336,6 +336,25 @@ class DoliApi
     }
 
     /**
+     * get any existing contact linked to a societe, regardless of its role
+     *
+     * @param int $id_soc societe id
+     * @return int|null contact id or null
+     */
+    public function getAnyContactBySociete(int $id_soc, $url = '/api/index.php/contacts/'): ?int
+    {
+        $result = $this->curl->runCurl($url . '?limit=1&thirdparty_ids=' . $id_soc);
+
+        if (!empty($result) && $this->curl->returnHttpInfo['http_code'] == 200) {
+            if (!empty($result[0]['id'])) {
+                return (int) $result[0]['id'];
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * get terms
      *
      * @return array|null terms list or null

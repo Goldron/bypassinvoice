@@ -306,6 +306,12 @@ class Bypassinvoice extends Module
      */
     protected function createContact(Address $address, int $societe_id): ?int
     {
+        if ($existing_id = $this->api->getAnyContactBySociete($societe_id)) {
+            DoliTools::printLog('createContact, contact already exists for societe ' . $societe_id . ' : ' . $existing_id);
+
+            return $existing_id;
+        }
+
         if (!empty($address->address2)) {
             $address->address1 = $address->address1 . ' ' . $address->address2;
         }

@@ -100,7 +100,7 @@ class BypassinvoicePdfDisplayModuleFrontController extends ModuleFrontController
         $lang = str_replace('-', '_', Context::getContext()->language->locale);
 
         if ($ref && $this->refBelongsToCurrentCustomer($ref)) {
-            $template = !empty(Configuration::get('BYPASSINVOICE_TEMPLATE')) ? Configuration::get('BYPASSINVOICE_TEMPLATE') : "Invoice";
+            $template = !empty(Configuration::get('BYPASSINVOICE_TEMPLATE')) ? Configuration::get('BYPASSINVOICE_TEMPLATE') : "crabe";
 
             $data = ["modulepart" => "invoice", "original_file" => $ref . "/" . $ref . ".pdf", "doctemplate" => $template, "langcode" => $lang];
             $this->content =  $this->module->downloadPDF($data);

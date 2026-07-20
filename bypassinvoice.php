@@ -108,7 +108,7 @@ class Bypassinvoice extends Module
             && \Configuration::updateValue('BYPASSINVOICE_BANK', 1)
             && \Configuration::updateValue('BYPASSINVOICE_TITLEPAGE', '')
             && \Configuration::updateValue('BYPASSINVOICE_DOLINVOICE', null)
-            && \Configuration::updateValue('BYPASSINVOICE_TEMPLATE', '')
+            && \Configuration::updateValue('BYPASSINVOICE_TEMPLATE', 'crabe')
             && \Configuration::updateValue('BYPASSINVOICE_WAREHOUSE', 1)
             && \Configuration::updateValue('BYPASSINVOICE_ALLINVOICE', null)
             && \Configuration::updateValue('BYPASSINVOICE_SLIP', null)

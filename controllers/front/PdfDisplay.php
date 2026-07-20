@@ -68,7 +68,7 @@ class BypassinvoicePdfDisplayModuleFrontController extends ModuleFrontController
      */
     protected function displayPDF(): void
     {
-        $ref = $this->decryptString(Tools::getValue('reference'), "@");
+        $ref = $this->decryptString(Tools::getValue('reference'), _COOKIE_IV_);
         $lang = str_replace('-', '_', Context::getContext()->language->locale);
 
         if ($ref) {

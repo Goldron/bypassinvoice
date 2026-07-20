@@ -131,7 +131,7 @@ class BypassinvoiceInvoicesModuleFrontController extends ModuleFrontController
                     foreach ($allInvoices as $item) {
                         $item['date_creation'] = date('d-m-Y', $item['date_creation']);
                         $item['total_ttc'] = Tools::displayPrice($item['total_ttc']);
-                        $item['pdf'] = $this->encryptString($item['ref'], "@");
+                        $item['pdf'] = $this->encryptString($item['ref'], _COOKIE_IV_);
                         $invoices[] = $item;
                     }
                 }
@@ -153,7 +153,7 @@ class BypassinvoiceInvoicesModuleFrontController extends ModuleFrontController
             if ($val === $item['ref_ext']) {
                 $item['date_creation'] = date('d-m-Y', $item['date_creation']);
                 $item['total_ttc'] = Tools::displayPrice($item['total_ttc']);
-                $item['pdf'] = $this->encryptString($item['ref'], "@");
+                $item['pdf'] = $this->encryptString($item['ref'], _COOKIE_IV_);
                 return $item;
             }
         }

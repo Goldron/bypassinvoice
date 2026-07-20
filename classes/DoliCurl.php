@@ -91,8 +91,8 @@ class DoliCurl
 
         $this->opts[CURLOPT_RETURNTRANSFER] = true;
         $this->opts[CURLOPT_FAILONERROR] = true;
-        $this->opts[CURLOPT_SSL_VERIFYPEER] = false;
-        $this->opts[CURLOPT_SSL_VERIFYHOST] = false;
+        $this->opts[CURLOPT_SSL_VERIFYPEER] = true;
+        $this->opts[CURLOPT_SSL_VERIFYHOST] = 2;
 
     }
 

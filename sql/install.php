@@ -28,7 +28,8 @@ $sql[] = 'CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . 'bypassinvoice` (
     `id_shop` int(11) NOT NULL DEFAULT \'1\',
 	`id_customer` int(11) NOT NULL,
     `id_societe` int(11) NOT NULL DEFAULT ' . $idSoc . ',
-    PRIMARY KEY  (`id_bypassinvoice`, `id_shop`)
+    PRIMARY KEY  (`id_bypassinvoice`, `id_shop`),
+    UNIQUE KEY `unique_customer_shop` (`id_customer`, `id_shop`)
 ) ENGINE=' . _MYSQL_ENGINE_ . ' DEFAULT CHARSET=utf8;';
 
 foreach ($sql as $query) {

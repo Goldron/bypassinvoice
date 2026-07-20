@@ -82,6 +82,7 @@ $_MODULE['<{bypassinvoice}prestashop>invoices_8cf04a9734132302f96da8e113e80ce5']
 $_MODULE['<{bypassinvoice}prestashop>configure_733cd8f848165d6847e8358c708878de'] = 'Delegar la gestión de facturas o su numeración a Dolibarr';
 $_MODULE['<{bypassinvoice}prestashop>configure_110f13b3cdd852dc3abbecf6101c226f'] = 'Correo electrónico de contacto';
 $_MODULE['<{bypassinvoice}prestashop>configure_5b6cf869265c13af8566f192b4ab3d2a'] = 'Documentación';
+$_MODULE['<{bypassinvoice}prestashop>configure_ce0be71e33226e4c1db2bcea5959f16b'] = 'Registro de eventos';
 $_MODULE['<{bypassinvoice}prestashop>configure_51ed37d3a2b8d3d27ea2318fcc9417c1'] = 'Modo exclusivo: Delegar la gestión de facturas solo con Dolibarr.';
 $_MODULE['<{bypassinvoice}prestashop>configure_455eb5370da4df791f1f8250d88b8ae8'] = 'En este modo, la función de facturación de PrestaShop está desactivada y toda la gestión se transfiere a Dolibarr. En las áreas de clientes, un bloque dedicado a las facturas muestra todas las facturas emitidas, correspondan o no a los pedidos.';
 $_MODULE['<{bypassinvoice}prestashop>configure_3a911ac489873df73c55af58728d4fc5'] = 'Debe desactivar la facturación en PrestaShop, consulte la pestaña Facturas en el menú desplegable';

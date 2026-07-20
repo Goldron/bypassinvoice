@@ -8,6 +8,9 @@ $_MODULE['<{bypassinvoice}prestashop>bypassinvoice_89d7a2f514717ffe4a05920256fe4
 $_MODULE['<{bypassinvoice}prestashop>bypassinvoice_89997dd601bd015d950343e0986d0a7c'] = 'La connessione con Dolibarr è stata stabilita.';
 $_MODULE['<{bypassinvoice}prestashop>bypassinvoice_92532ec4e3a7ae654a6aaa2fd1f58d81'] = 'Inserite i vostri identificativi di connessione.';
 $_MODULE['<{bypassinvoice}prestashop>bypassinvoice_ecf629e4b07bbdf0983017a56aad5427'] = 'Connessione a Dolibarr fallita a causa di impostazioni errate, errore';
+$_MODULE['<{bypassinvoice}prestashop>bypassinvoice_d69eca63310344edb0d0f9881cf9b662'] = 'Sconto cliente';
+$_MODULE['<{bypassinvoice}prestashop>bypassinvoice_656c972faa2c4ebce34618a3511d87e9'] = 'Problema di accesso con il seguente endpoint (magazzino, tipo di pagamento o banca); verificare i permessi o consultare il registro degli eventi';
+$_MODULE['<{bypassinvoice}prestashop>bypassinvoice_f23738594f51d25753c0e679535529d5'] = 'Inserire un valore valido';
 $_MODULE['<{bypassinvoice}prestashop>bypassinvoice_e1d4ca2eea0c80ec7fe1df450a0a9077'] = 'Blocco conto di fatturazione';
 $_MODULE['<{bypassinvoice}prestashop>bypassinvoice_085c312483ee82461ce32a5f43058720'] = 'Mostrare l\'elenco delle fatture Dolibarr';
 $_MODULE['<{bypassinvoice}prestashop>bypassinvoice_79814808a8d4d8d810f9f95ec2adce41'] = 'Mostrare un blocco nell\'area cliente di PrestaShop per le fatture Dolibarr.';
@@ -52,6 +55,10 @@ $_MODULE['<{bypassinvoice}prestashop>bypassinvoice_702ccd4c4de96dda2108bed873989
 $_MODULE['<{bypassinvoice}prestashop>bypassinvoice_dceb0dd6c70c815e020f10c0443448a2'] = 'Banca di destinazione per i pagamenti.';
 $_MODULE['<{bypassinvoice}prestashop>bypassinvoice_6416e8cb5fc0a208d94fa7f5a300dbc4'] = 'Magazzino';
 $_MODULE['<{bypassinvoice}prestashop>bypassinvoice_b86cc8b5920816a5455739c74f3313e2'] = 'Magazzino da utilizzare di default per la deduzione delle scorte.';
+$_MODULE['<{bypassinvoice}prestashop>bypassinvoice_b16c9dcd2ec829682c1e8a8337c52a73'] = 'Prezzi specifici';
+$_MODULE['<{bypassinvoice}prestashop>bypassinvoice_78b005c485526fbb74a3819c2642b3f9'] = 'Considerazione dei prezzi specifici per i clienti appartenenti a diversi gruppi, diversi paesi, ecc. La disattivazione considera solo gli sconti relativi ai clienti in Dolibarr.';
+$_MODULE['<{bypassinvoice}prestashop>bypassinvoice_f338661e49910d0dd2c215146b307f2e'] = 'Nota di credito';
+$_MODULE['<{bypassinvoice}prestashop>bypassinvoice_498e1430e06f4c711aea2e13a00807db'] = 'Attivare o disattivare le note di credito esclusivamente per i prodotti. (consente la creazione di note di credito e il loro invio a Dolibarr)';
 $_MODULE['<{bypassinvoice}prestashop>bypassinvoice_0af120def780ad76967f429a5656c21b'] = 'Impostazioni delle fatture con pagamenti differiti.';
 $_MODULE['<{bypassinvoice}prestashop>bypassinvoice_7f5c1dd56ccb972e2ebed13c5f610d70'] = 'Stato senza pagamento.';
 $_MODULE['<{bypassinvoice}prestashop>bypassinvoice_bb0c82b04faa28c4ba695311e5c0a072'] = 'Non iniziare un pagamento sotto Dolibarr quando lo stato è stato nella posizione seguente.';

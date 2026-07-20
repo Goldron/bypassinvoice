@@ -198,6 +198,10 @@ class Bypassinvoice extends Module
      */
     public function hookActionOrderSlipAdd($params)
     {
+        if ($this->endPointError) {
+            return;
+        }
+
         if (!Configuration::get('BYPASSINVOICE_SLIP')) {
             return;
         }
@@ -587,7 +591,7 @@ class Bypassinvoice extends Module
      */
     public function hookActionCustomerAccountAdd($params): void
     {
-        if (!empty($params['newCustomer']->email) && !empty($params['newCustomer']->name)) {
+        if (!empty($params['newCustomer']->email)) {
             if ($this->updateSociete($params['newCustomer'])) { // update company
                 return;
             } elseif (!empty($this->createSociete($params['newCustomer']))) { // create a new company
@@ -1088,6 +1092,8 @@ class Bypassinvoice extends Module
                     $data['subprice'] *= -1;
                 }
             }
+
+            $product_dol = null;
 
             if (!empty($data['barcode'])) {
                 $product_dol = $this->api->getProductByBarcode($data['barcode']);

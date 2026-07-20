@@ -97,7 +97,7 @@ class AdminBypassInvoiceRelationController extends ModuleAdminController
     {
         if (
             !Validate::isLoadedObject($this->object)
-            || (int) $this->object->id_shop !== (int) $this->context->shop->id
+            || ClassBypassInvoice::getShopOf((int) $this->object->id) !== (int) $this->context->shop->id
         ) {
             $this->errors[] = Tools::displayError('Relation introuvable.');
 

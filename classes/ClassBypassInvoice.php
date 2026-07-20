@@ -23,16 +23,40 @@ if (!defined('_PS_VERSION_')) {
 
 class ClassBypassInvoice extends \ObjectModel
 {
+    /**
+     * id_shop is NOT listed here on purpose: it collides with the id_shop
+     * property already declared protected on the core ObjectModel class.
+     * EntityMapper (PrestaShop core) hydrates every field listed here via
+     * $entity->{$key} = $value from outside the class hierarchy, which
+     * fatals on a protected property. This class never uses ObjectModel's
+     * own save()/add() (everything goes through raw SQL below), so leaving
+     * id_shop out of the definition has no effect besides avoiding the crash.
+     */
     public static $definition = array(
         'table' => 'bypassinvoice',
         'primary' => 'id_bypassinvoice',
         'multilang' => false,
         'fields' => array(
-            'id_shop' => array('type' => self::TYPE_INT, 'validate' => 'isunsignedInt', 'required' => true),
             'id_customer' => array('type' => self::TYPE_INT, 'validate' => 'isunsignedInt'),
             'id_societe' => array('type' => self::TYPE_INT, 'validate' => 'isunsignedInt'),
         ),
     );
+
+    /**
+     * id_shop of a relation, fetched directly (see note above on why it
+     * can't be read from a hydrated instance's property).
+     *
+     * @param int $id_bypassinvoice
+     * @return int
+     */
+    public static function getShopOf(int $id_bypassinvoice): int
+    {
+        $sql = 'SELECT `id_shop`
+                FROM ' . _DB_PREFIX_ . 'bypassinvoice
+                WHERE `id_bypassinvoice` = ' . (int) $id_bypassinvoice;
+
+        return (int) \Db::getInstance()->getValue($sql);
+    }
 
     /**
      * get list

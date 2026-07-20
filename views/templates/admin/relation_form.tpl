@@ -169,7 +169,7 @@ console.log('[bypassinvoice] script tag reached');
 	form.addEventListener('submit', function (e) {
 		if (!hidden.value) {
 			e.preventDefault();
-			alert({l s='Veuillez sélectionner une société dans la liste.' mod='bypassinvoice' js=1});
+			alert('{l s='Veuillez sélectionner une société dans la liste.' mod='bypassinvoice' js=1}');
 		}
 	});
 

@@ -203,6 +203,11 @@ class Bypassinvoice extends Module
         }
 
         $productRefunded = $params['productList'];
+
+        if (empty($productRefunded)) {
+            return;
+        }
+
         $order = $params['order'];
 
         $societe_id = $this->getSocieteID(new Customer($order->id_customer), $order->id_customer);

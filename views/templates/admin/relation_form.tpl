@@ -62,13 +62,29 @@
 </div>
 
 <script type="text/javascript">
+console.log('[bypassinvoice] script tag reached');
 (function () {
 	'use strict';
 
 	var input = document.getElementById('bypassinvoice_societe_search');
 	var hidden = document.getElementById('bypassinvoice_id_societe');
 	var results = document.getElementById('bypassinvoice_societe_results');
+	var form = document.getElementById('bypassinvoice_relation_form');
 	var searchUrl = {$ajax_search_url|json_encode nofilter};
+
+	console.log('[bypassinvoice] elements found:', {
+		input: !!input,
+		hidden: !!hidden,
+		results: !!results,
+		form: !!form
+	});
+	console.log('[bypassinvoice] searchUrl =', searchUrl);
+
+	if (!input || !hidden || !results || !form) {
+		console.error('[bypassinvoice] a required element is missing, aborting setup');
+		return;
+	}
+
 	var timer = null;
 	var currentRequest = null;
 
@@ -79,6 +95,7 @@
 
 	input.addEventListener('input', function () {
 		var term = input.value;
+		console.log('[bypassinvoice] input event, term =', JSON.stringify(term));
 		hidden.value = '';
 		clearTimeout(timer);
 
@@ -88,27 +105,37 @@
 		}
 
 		timer = setTimeout(function () {
+			var url = searchUrl + '&q=' + encodeURIComponent(term);
+			console.log('[bypassinvoice] sending request to', url);
+
 			if (currentRequest) {
 				currentRequest.abort();
 			}
 			currentRequest = new XMLHttpRequest();
-			currentRequest.open('GET', searchUrl + '&q=' + encodeURIComponent(term), true);
+			currentRequest.open('GET', url, true);
 			currentRequest.onload = function () {
+				console.log('[bypassinvoice] response status =', currentRequest.status, 'body =', currentRequest.responseText);
+
 				if (currentRequest.status !== 200) {
+					console.error('[bypassinvoice] non-200 response, aborting');
 					return;
 				}
 				var data;
 				try {
 					data = JSON.parse(currentRequest.responseText);
 				} catch (e) {
+					console.error('[bypassinvoice] JSON.parse failed', e);
 					return;
 				}
 
 				clearResults();
 
 				if (!data.results || !data.results.length) {
+					console.log('[bypassinvoice] no results');
 					return;
 				}
+
+				console.log('[bypassinvoice] rendering', data.results.length, 'results');
 
 				data.results.forEach(function (item) {
 					var li = document.createElement('li');
@@ -126,6 +153,9 @@
 
 				results.style.display = 'block';
 			};
+			currentRequest.onerror = function () {
+				console.error('[bypassinvoice] XHR network error');
+			};
 			currentRequest.send();
 		}, 300);
 	});
@@ -136,11 +166,13 @@
 		}
 	});
 
-	document.getElementById('bypassinvoice_relation_form').addEventListener('submit', function (e) {
+	form.addEventListener('submit', function (e) {
 		if (!hidden.value) {
 			e.preventDefault();
 			alert({l s='Veuillez sélectionner une société dans la liste.' mod='bypassinvoice' js=1});
 		}
 	});
+
+	console.log('[bypassinvoice] listeners attached');
 })();
 </script>

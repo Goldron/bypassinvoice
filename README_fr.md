@@ -45,7 +45,7 @@ Le module fonctionne selon deux modes, configurables depuis son écran de régla
 
 ### Gestion des relations client ↔ société
 
-L'onglet **Sociétés Dolibarr** (sous le menu Clients du back-office) liste tous les clients PrestaShop déjà associés à une société Dolibarr. Pour chaque relation, il est possible de :
+L'onglet **Liaisons clients Dolibarr** (sous le menu Clients du back-office) liste tous les clients PrestaShop déjà associés à une société Dolibarr. Pour chaque relation, il est possible de :
 - **Modifier** la société associée, via un champ de recherche en direct dans les tiers Dolibarr
 - **Supprimer** la relation
 

@@ -45,7 +45,7 @@ The module operates in two modes, configurable from its settings screen:
 
 ### Managing customer ↔ societe relations
 
-The **Sociétés Dolibarr** tab (under the back office's Customers menu) lists every PrestaShop customer already linked to a Dolibarr societe. For each relation, you can:
+The **Liaisons clients Dolibarr** tab (under the back office's Customers menu) lists every PrestaShop customer already linked to a Dolibarr societe. For each relation, you can:
 - **Edit** the linked societe, via a live search field over Dolibarr third parties
 - **Delete** the relation
 

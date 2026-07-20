@@ -44,7 +44,7 @@ class Bypassinvoice extends Module
     {
         $this->name = 'bypassinvoice';
         $this->tab = 'others';
-        $this->version = '1.5.0';
+        $this->version = '1.5.1';
         $this->author = 'SILADEL';
         $this->need_instance = 0;
         $this->module_key = 'a9e1395b4f26cd8a82064af070100c4a';
@@ -118,7 +118,7 @@ class Bypassinvoice extends Module
     }
 
     /**
-     * Register the "Sociétés Dolibarr" back-office tab used to manage the
+     * Register the "Liaisons clients Dolibarr" back-office tab used to manage the
      * customer <-> Dolibarr societe relations.
      *
      * @return bool
@@ -135,7 +135,7 @@ class Bypassinvoice extends Module
         $tab->id_parent = (int) \Tab::getIdFromClassName('AdminParentCustomer');
 
         foreach (\Language::getLanguages(false) as $lang) {
-            $tab->name[$lang['id_lang']] = 'Sociétés Dolibarr';
+            $tab->name[$lang['id_lang']] = 'Liaisons clients Dolibarr';
         }
 
         return $tab->add();

@@ -73,16 +73,16 @@ class DoliTools
         if (!empty(\Configuration::get('BYPASSINVOICE_LOGS'))) {
             switch ($type) {
                 case 'warning':
-                    self::getLogger()->logWarning(sprintf($msg));
+                    self::getLogger()->logWarning($msg);
                     break;
                 case 'error':
-                    self::getLogger()->logError(sprintf($msg));
+                    self::getLogger()->logError($msg);
                     break;
                 case 'notice':
-                    self::getLogger()->logNotice(sprintf($msg));
+                    self::getLogger()->logNotice($msg);
                     break;
                 default:
-                    self::getLogger()->logInfo(sprintf($msg));
+                    self::getLogger()->logInfo($msg);
             }
         }
     }

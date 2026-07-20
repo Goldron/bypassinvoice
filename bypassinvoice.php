@@ -1016,6 +1016,14 @@ class Bypassinvoice extends Module
         foreach ($products as $product) {
             $data = $this->replaceKeysArray($product, $swapFields);
 
+            // product_price is already net of any percentage-based specific
+            // price ; pair the original price with the reduction instead of
+            // double-applying it via remise_percent (not for refund lines,
+            // whose product_price has already been overridden/negated).
+            if (empty($refund) && !empty($data['remise_percent'])) {
+                $data['subprice'] = (float) $product['original_product_price'];
+            }
+
             if (!empty($data['barcode'])) {
                 $product_dol = $this->api->getProductByBarcode($data['barcode']);
             }

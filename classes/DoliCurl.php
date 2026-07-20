@@ -93,6 +93,8 @@ class DoliCurl
         $this->opts[CURLOPT_FAILONERROR] = true;
         $this->opts[CURLOPT_SSL_VERIFYPEER] = true;
         $this->opts[CURLOPT_SSL_VERIFYHOST] = 2;
+        $this->opts[CURLOPT_CONNECTTIMEOUT] = 5;
+        $this->opts[CURLOPT_TIMEOUT] = 15;
 
     }
 

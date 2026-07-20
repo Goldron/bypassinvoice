@@ -282,7 +282,7 @@ class Bypassinvoice extends Module
 
     public function WSonline()
     {
-        if ($this->status < 400 && !empty($this->api)) {
+        if ($this->status >= 200 && $this->status < 300 && !empty($this->api)) {
             return true;
         }
         return false;

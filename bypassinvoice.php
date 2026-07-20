@@ -237,6 +237,20 @@ class Bypassinvoice extends Module
                 $this->addLines($order, $invoice_id, $refund);
             }
 
+            // shipping cost refunded ("cancel_product_shipping" checkbox) :
+            // not part of $params, has to be read back from the order_slip
+            // row that was just created.
+            $slip = Db::getInstance()->getRow(
+                'SELECT `shipping_cost`, `total_shipping_tax_excl`
+                 FROM ' . _DB_PREFIX_ . 'order_slip
+                 WHERE `id_order` = ' . (int) $order->id . '
+                 ORDER BY `id_order_slip` DESC'
+            );
+
+            if (!empty($slip['shipping_cost']) && (float) $slip['total_shipping_tax_excl'] > 0) {
+                $this->addRefundedShippingLine($order, $invoice_id, (float) $slip['total_shipping_tax_excl']);
+            }
+
             // warehouse
             $warehouse = 0;
             if (!empty(Configuration::get('BYPASSINVOICE_WAREHOUSE'))) {
@@ -991,6 +1005,35 @@ class Bypassinvoice extends Module
             }
             DoliTools::printLog('createInvoice, add carrier line : ' . $order->id);
         }
+    }
+
+    /**
+     * Add a negative shipping line to a credit note (avoir), when the
+     * "cancel_product_shipping" checkbox was used when generating it.
+     * Uses the carrier's real tax rate so the line offsets the original
+     * carrier line exactly.
+     *
+     * @param Order
+     * @param int id invoice
+     * @param float amount refunded (tax excl, positive)
+     * @return void
+     */
+    protected function addRefundedShippingLine($order, int $invoice_id, float $shipping_amount): void
+    {
+        $carrier = new Carrier((int) $order->id_carrier);
+
+        $data = [];
+        $data['label'] = $carrier->name;
+        $data['subprice'] = $shipping_amount * -1;
+        $data['qty'] = 1;
+        $data['tva_tx'] = (float) $order->carrier_tax_rate;
+        $data['product_type'] = 1;
+
+        if (empty($this->api->createInvoiceLines($data, $invoice_id))) {
+            DoliTools::printLog('createInvoice, refunded shipping line error : ' . $order->id, 'error');
+            PrestaShopLogger::addLog('createInvoice, refunded shipping line error', 3, null, 'bypassinvoice', $order->id);
+        }
+        DoliTools::printLog('createInvoice, add refunded shipping line : ' . $order->id);
     }
 
     /**

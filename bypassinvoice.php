@@ -811,27 +811,30 @@ class Bypassinvoice extends Module
      */
     public function getSocieteID(Customer $customer, int $id_customer): ?int
     {
-        $societe_id = null;
+        $societe_id = BYPASS::getBypass($id_customer);
 
-        if (empty($societe_id)) {
-            $societe_id = BYPASS::getBypass($id_customer);
+        if (!empty($societe_id)) {
+            return $societe_id;
         }
 
-        if (empty($societe_id)) {
-            if ($customer->siret) {
-                $societe_id = $this->api->isCustomerByField("siret", $customer->siret);
-            }
+        if ($customer->siret) {
+            $societe_id = $this->api->isCustomerByField("siret", $customer->siret);
         }
 
         if (empty($societe_id)) {
             $societe_id = $this->api->getCustomerId($customer->email);
         }
 
-        if (empty($societe_id)) {
-            $societe_id = $this->createSociete($customer);
+        // found via SIRET or email lookup: cache it so future calls hit the
+        // bypassinvoice table instead of Dolibarr, and it shows up in the
+        // back-office relation list.
+        if (!empty($societe_id)) {
+            BYPASS::createBypass($id_customer, $societe_id);
+
+            return $societe_id;
         }
 
-        return $societe_id;
+        return $this->createSociete($customer);
     }
 
     /**

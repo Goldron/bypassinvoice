@@ -1070,10 +1070,15 @@ class Bypassinvoice extends Module
 
             // product_price is already net of any percentage-based specific
             // price ; pair the original price with the reduction instead of
-            // double-applying it via remise_percent (not for refund lines,
-            // whose product_price has already been overridden/negated).
-            if (empty($refund) && !empty($data['remise_percent'])) {
+            // double-applying it via remise_percent. For refund lines the
+            // sign has to be flipped too, since their product_price was
+            // already negated in hookActionOrderSlipAdd().
+            if (!empty($data['remise_percent'])) {
                 $data['subprice'] = (float) $product['original_product_price'];
+
+                if (!empty($refund)) {
+                    $data['subprice'] *= -1;
+                }
             }
 
             if (!empty($data['barcode'])) {

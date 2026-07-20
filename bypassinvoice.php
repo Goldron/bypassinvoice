@@ -203,12 +203,22 @@ class Bypassinvoice extends Module
         }
 
         $productRefunded = $params['productList'];
+        $order = $params['order'];
 
-        if (empty($productRefunded)) {
+        // shipping cost refunded ("cancel_product_shipping" checkbox) is not
+        // part of $params, has to be read back from the order_slip row that
+        // was just created.
+        $slip = Db::getInstance()->getRow(
+            'SELECT `shipping_cost`, `total_shipping_tax_excl`
+             FROM ' . _DB_PREFIX_ . 'order_slip
+             WHERE `id_order` = ' . (int) $order->id . '
+             ORDER BY `id_order_slip` DESC'
+        );
+        $shippingRefunded = !empty($slip['shipping_cost']) && (float) $slip['total_shipping_tax_excl'] > 0;
+
+        if (empty($productRefunded) && !$shippingRefunded) {
             return;
         }
-
-        $order = $params['order'];
 
         $societe_id = $this->getSocieteID(new Customer($order->id_customer), $order->id_customer);
 
@@ -228,7 +238,8 @@ class Bypassinvoice extends Module
         if (!empty($invoice_id)) {
             $product_list = $order->getOrderDetailList();
 
-            if (isset($product_list) && !empty($product_list)) {
+            if (!empty($productRefunded) && isset($product_list) && !empty($product_list)) {
+                $refund = [];
 
                 foreach ($product_list as $value) {
                     if (array_key_exists($value['id_order_detail'], $productRefunded)) {
@@ -238,21 +249,13 @@ class Bypassinvoice extends Module
                     }
                 }
 
-                // add product line
-                $this->addLines($order, $invoice_id, $refund);
+                if (!empty($refund)) {
+                    // add product line
+                    $this->addLines($order, $invoice_id, $refund);
+                }
             }
 
-            // shipping cost refunded ("cancel_product_shipping" checkbox) :
-            // not part of $params, has to be read back from the order_slip
-            // row that was just created.
-            $slip = Db::getInstance()->getRow(
-                'SELECT `shipping_cost`, `total_shipping_tax_excl`
-                 FROM ' . _DB_PREFIX_ . 'order_slip
-                 WHERE `id_order` = ' . (int) $order->id . '
-                 ORDER BY `id_order_slip` DESC'
-            );
-
-            if (!empty($slip['shipping_cost']) && (float) $slip['total_shipping_tax_excl'] > 0) {
+            if ($shippingRefunded) {
                 $this->addRefundedShippingLine($order, $invoice_id, (float) $slip['total_shipping_tax_excl']);
             }
 

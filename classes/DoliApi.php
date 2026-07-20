@@ -497,6 +497,25 @@ class DoliApi
     }
 
     /**
+     * get invoice by its own Dolibarr reference (ex: FA2607-0275)
+     *
+     * @param string $ref Dolibarr invoice ref
+     * @param string $url endpoint
+     *
+     * @return null|array invoice array
+     */
+    public function getInvoiceByOwnRef(string $ref, $url = '/api/index.php/invoices/ref/'): ?array
+    {
+        $result = $this->curl->runCurl($url . rawurlencode($ref));
+
+        if (!empty($result) && $this->curl->returnHttpInfo['http_code'] == 200) {
+            return $result;
+        }
+
+        return null;
+    }
+
+    /**
      * get Invoice in to Dolibarr
      *
      * @param int $ref id order Prestashop

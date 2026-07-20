@@ -63,6 +63,34 @@ class BypassinvoicePdfDisplayModuleFrontController extends ModuleFrontController
     }
 
     /**
+     * Check that the decrypted invoice ref actually belongs to the
+     * currently logged-in customer's Dolibarr societe, so a customer
+     * cannot download another customer's invoice PDF by forging a
+     * reference value.
+     *
+     * @param string $ref Dolibarr invoice ref
+     * @return bool
+     */
+    protected function refBelongsToCurrentCustomer(string $ref): bool
+    {
+        $customer = Context::getContext()->customer;
+
+        if (!Validate::isLoadedObject($customer)) {
+            return false;
+        }
+
+        $id_soc = $this->module->getSocieteID($customer, (int) $customer->id);
+
+        if (empty($id_soc)) {
+            return false;
+        }
+
+        $invoice = $this->module->api->getInvoiceByOwnRef($ref);
+
+        return !empty($invoice['socid']) && (int) $invoice['socid'] === (int) $id_soc;
+    }
+
+    /**
      * Display PDF
      *
      */
@@ -71,7 +99,7 @@ class BypassinvoicePdfDisplayModuleFrontController extends ModuleFrontController
         $ref = $this->decryptString(Tools::getValue('reference'), _COOKIE_IV_);
         $lang = str_replace('-', '_', Context::getContext()->language->locale);
 
-        if ($ref) {
+        if ($ref && $this->refBelongsToCurrentCustomer($ref)) {
             $template = !empty(Configuration::get('BYPASSINVOICE_TEMPLATE')) ? Configuration::get('BYPASSINVOICE_TEMPLATE') : "Invoice";
 
             $data = ["modulepart" => "invoice", "original_file" => $ref . "/" . $ref . ".pdf", "doctemplate" => $template, "langcode" => $lang];
